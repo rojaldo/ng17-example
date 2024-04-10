@@ -8,7 +8,7 @@
         <td colspan="3"> 
             <input type="text" id="result" [value]="display" #inputDisplay > 
         </td> 
-        <td><input type="button" (click)="handleClick('c')" value="c"></td>
+        <td><input type="button" (click)="handleClick('C')" value="C"></td>
     </tr> 
 
     <tr> 
@@ -31,7 +31,7 @@
     </tr> 
     <tr> 
         <td><input type="button" (click)="handleClick(0)" value="0"></td>
-        <td><input type="button" (click)="handleClick('.')" value="."></td>
+        <td><input type="button" (click)="handleClick('.')" value="." disabled></td>
         <td><input type="button" (click)="handleClick('=')" value="="></td>
         <td><input type="button" (click)="handleClick('+')" value="+"></td>
     </tr> 

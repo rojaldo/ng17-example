@@ -2,4 +2,28 @@
   Hello {{ title }}!
 </h1>
 
-<app-calculator></app-calculator>
+<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+	<li [ngbNavItem]="1">
+		<button ngbNavLink>Calculators</button>
+		<ng-template ngbNavContent>
+      <app-calculator id = "1"></app-calculator>
+
+		</ng-template>
+	</li>
+	<li [ngbNavItem]="2">
+		<button ngbNavLink>Heroes</button>
+		<ng-template ngbNavContent>
+      <h1>Heroes</h1>
+		</ng-template>
+	</li>
+	<li [ngbNavItem]="3">
+		<button ngbNavLink>Apod</button>
+		<ng-template ngbNavContent>
+		</ng-template>
+	</li>
+</ul>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+<pre>Active: {{ active }}</pre>
+
