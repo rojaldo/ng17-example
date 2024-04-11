@@ -5,37 +5,37 @@ import { HeroesService } from '../../../services/heroes.service';
 import { Hero } from '../../../models/hero';
 import { BehaviorSubject } from 'rxjs';
 import { Character } from '../../../models/character';
+import { ListComponent } from "../list/list.component";
+import { log } from 'console';
+import { FormComponent } from "../form/form.component";
 
 @Component({
-  selector: 'app-heroes',
-  standalone: true,
-  imports: [FormsModule, JsonPipe, AsyncPipe],
-  templateUrl: './heroes.component.html',
-  styleUrl: './heroes.component.scss'
+    selector: 'app-heroes',
+    standalone: true,
+    templateUrl: './heroes.component.html',
+    styleUrl: './heroes.component.scss',
+    imports: [FormsModule, JsonPipe, AsyncPipe, ListComponent, FormComponent]
 })
 export class HeroesComponent implements OnInit{
 
   heroes: Hero[] = [];
 
-  heroName = '';
-  heroDescription = '';
 
-  heroes$!: BehaviorSubject<Character[]>;
+  // heroes$!: BehaviorSubject<Character[]>;
 
 
 
   constructor(private service: HeroesService) { }
 
   ngOnInit(): void {
-    // this.service.heroes$.subscribe(heroes => this.heroes = heroes);
-    this.heroes$ = this.service.heroes$;
+    this.service.heroes$.subscribe(heroes => {
+      this.heroes = heroes
+    });
+    // this.heroes$ = this.service.heroes$;
   }
 
-  addHero() {
-    if (this.heroName === '') return;
-    this.service.addHero(new Hero (this.heroName, this.heroDescription));
-    this.heroName = '';
-    this.heroDescription = '';
+  addHero(hero: any) {
+    this.service.addHero(hero);
   }
 
 }
