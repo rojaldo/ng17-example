@@ -1,10 +1,19 @@
 <div
     class="container"
 >
+
+<button
+    type="button"
+    class="btn btn-primary"
+    (click)="sortByHeight()"
+>
+    order by height
+</button>
+
     <div
         class="row justify-content-center align-items-center g-2"
     >
-    @for (character of characters; track $index) {
+    @for (character of characters | sortByHeight:false:false:true | async; track $index) {
         <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
             <div class="card">
                 <div class="card-body">
