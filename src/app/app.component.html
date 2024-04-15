@@ -22,6 +22,12 @@
 			<app-apod></app-apod>
 		</ng-template>
 	</li>
+	<li [ngbNavItem]="4">
+		<button ngbNavLink>Star Wars</button>
+		<ng-template ngbNavContent>
+			<app-sw></app-sw>
+		</ng-template>
+	</li>
 </ul>
 
 <div [ngbNavOutlet]="nav" class="mt-2"></div>

@@ -2,31 +2,13 @@
 <div
     class="container"
 >
-<ngb-datepicker #dp [(ngModel)]="model" (dateSelect)="handleChange($event)" />
 
-<div class="row align-items-md-stretch">
+<app-apod-date-picker
+    (onDateChange)="handleChange($event)"
+></app-apod-date-picker>
 
-        <div class="col-md-12">
-            <div
-                class="h-100 p-5 bg-light border rounded-3"
-            >
-                <h2>{{apod.title}}</h2>
-                <p>
-                    @if (apod.isImage) {
-                        <img
-                        [src]="apod.url"
-                        alt=""
-                        class="img-fluid"
-                    />
-
-                    }@else if (apod.isVideo) {
-                        <youtube-player [videoId]="apod.videoId"/>
-                    }
-                <p>
-                    {{apod.explanation}}
-                </p>
-            </div>
-        </div>
-    </div>
+<app-apod-info
+    [date]="dateStr"
+></app-apod-info>
     
 </div>
