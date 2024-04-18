@@ -28,6 +28,12 @@
 			<app-sw></app-sw>
 		</ng-template>
 	</li>
+	<li [ngbNavItem]="5">
+		<button ngbNavLink>Form Sample</button>
+		<ng-template ngbNavContent>
+			<app-form></app-form>
+		</ng-template>
+	</li>
 </ul>
 
 <div [ngbNavOutlet]="nav" class="mt-2"></div>

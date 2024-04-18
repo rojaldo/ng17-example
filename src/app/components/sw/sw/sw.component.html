@@ -1,19 +1,22 @@
 <div
     class="container"
 >
-
-<button
-    type="button"
-    class="btn btn-primary"
-    (click)="sortByHeight()"
->
-    order by height
-</button>
+<!-- <ngx-slider [(value)]="value" [(highValue)]="highValue" [options]="options" (userChange)="handleChange($event)"></ngx-slider> -->
+<div ngbDropdown class="d-inline-block">
+    <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+        Sort by
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        @for (item of sortArray; track $index) {
+            <button ngbDropdownItem (click)="sortBy($index)">{{item.toString()}} </button>
+        }
+    </div>
+</div>
 
     <div
         class="row justify-content-center align-items-center g-2"
     >
-    @for (character of characters | sortByHeight:false:false:true | async; track $index) {
+    @for (character of characters$ |filterByHeight: value: highValue | sortBy: sort | async; track $index) {
         <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
             <div class="card">
                 <div class="card-body">
