@@ -14,6 +14,7 @@ import { TrivialCardComponent } from "../trivial-card/trivial-card.component";
 export class TrivialComponent implements OnInit{
 
   cards: TrivialCard[] = [];
+  score = 0;
   
     constructor(private service:TrivialService) { }
 
@@ -22,6 +23,10 @@ export class TrivialComponent implements OnInit{
     this.service.cards$.subscribe(cards => {
       this.cards = cards;
     });
+  }
+
+  handleAnswer(answer: boolean) {
+    (answer) ? this.score += 2 : this.score -= 1;
   }
 
     

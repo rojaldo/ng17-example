@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">{{card.question}}</h4>
+        <h4 class="card-title" [innerHTML]="card.question"></h4>
         <div class="d-grid gap-2">
             @for (answer of card.answers; track $index) {
 

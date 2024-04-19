@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TrivialCard } from '../../../models/trivial';
 
 @Component({
@@ -11,6 +11,7 @@ import { TrivialCard } from '../../../models/trivial';
 export class TrivialCardComponent {
 
   @Input() card!: TrivialCard;
+  @Output() onCardAnswered = new EventEmitter<boolean>();
 
   buttonClasses = ['btn btn-primary', 'btn btn-primary', 'btn btn-primary', 'btn btn-primary'];
 
@@ -29,6 +30,8 @@ export class TrivialCardComponent {
       this.buttonClasses[index] = 'btn btn-danger';
     
     }
+
+    this.onCardAnswered.emit(this.card.isCorrectAnswer(answer));
   }
 
 }
