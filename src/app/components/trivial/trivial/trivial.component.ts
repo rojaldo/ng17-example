@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { TrivialService } from '../../../services/trivial.service';
 import { JsonPipe } from '@angular/common';
 import { TrivialCard } from '../../../models/trivial';
+import { TrivialCardComponent } from "../trivial-card/trivial-card.component";
 
 @Component({
-  selector: 'app-trivial',
-  standalone: true,
-  imports: [JsonPipe],
-  templateUrl: './trivial.component.html',
-  styleUrl: './trivial.component.scss'
+    selector: 'app-trivial',
+    standalone: true,
+    templateUrl: './trivial.component.html',
+    styleUrl: './trivial.component.scss',
+    imports: [JsonPipe, TrivialCardComponent]
 })
 export class TrivialComponent implements OnInit{
 
@@ -22,5 +23,7 @@ export class TrivialComponent implements OnInit{
       this.cards = cards;
     });
   }
+
+    
 
 }
