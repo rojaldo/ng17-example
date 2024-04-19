@@ -38,7 +38,10 @@ export class SwComponent implements OnInit {
   sortLength = Object.keys(SortSW).length / 2;
   sortArray: string[] = Object.values(SortSW);
 
-  constructor(private service: StarWarsService) { }
+  constructor(private service: StarWarsService) { 
+    
+    
+  }
 
   ngOnInit(): void {
     let mymin = 0;

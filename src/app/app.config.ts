@@ -7,5 +7,5 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(), provideHttpClient(withFetch()), provideClientHydration(), provideStore()]
+  providers: [provideRouter(routes), provideClientHydration(), provideHttpClient(withFetch()), provideStore()]
 };

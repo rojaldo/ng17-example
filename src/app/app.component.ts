@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CalculatorComponent } from './components/calculator/calculator/calculator.component';
 import { CalculatorService } from './services/calculator.service';
@@ -9,6 +9,7 @@ import { ApodComponent } from "./components/apod/apod/apod.component";
 import { SwComponent } from "./components/sw/sw/sw.component";
 import { FormComponent } from "./components/heroes/form/form.component";
 import { TrivialComponent } from "./components/trivial/trivial/trivial.component";
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 @Component({
     selector: 'app-root',
@@ -20,4 +21,12 @@ import { TrivialComponent } from "./components/trivial/trivial/trivial.component
 export class AppComponent {
 title = 'ng17';
   active = 6;
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      console.log('This will only be logged in the browser');
+    }
+    if (isPlatformServer(this.platformId)) {
+      console.log('This will only be logged on the server');
+    }
+  }
 }
