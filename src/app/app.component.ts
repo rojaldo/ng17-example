@@ -8,15 +8,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApodComponent } from "./components/apod/apod/apod.component";
 import { SwComponent } from "./components/sw/sw/sw.component";
 import { FormComponent } from "./components/heroes/form/form.component";
+import { TrivialComponent } from "./components/trivial/trivial/trivial.component";
 
 @Component({
     selector: 'app-root',
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
-    imports: [RouterOutlet, NgbNavModule, CalculatorComponent, HeroesComponent, ApodComponent, SwComponent, FormComponent]
+    imports: [RouterOutlet, NgbNavModule, CalculatorComponent, HeroesComponent, ApodComponent, SwComponent, FormComponent, TrivialComponent]
 })
 export class AppComponent {
 title = 'ng17';
-  active = 5;
+  active = 6;
 }

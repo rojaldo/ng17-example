@@ -2213,7 +2213,7 @@ span.footnote {
 
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css"/>
 
 </head>
 <body class="article">
@@ -2233,6 +2233,21 @@ span.footnote {
 <li class="toc-entry"><a href="#_effects">Effects</a></li>
 </ul></li>
 </li>
+<li class="toc-entry"><a href="#_angular_ssr">Angular SSR</a>
+<li><ul class="sectlevel2">
+<li class="toc-entry"><a href="#_configuración_de_angular_ssr">Configuración de Angular SSR</a></li>
+<li class="toc-entry"><a href="#_hydration">Hydration</a></li>
+<li class="toc-entry"><a href="#_compatibilidad_con_api_del_navegador">Compatibilidad con API del navegador</a></li>
+<li class="toc-entry"><a href="#_angular_service_worker">Angular Service Worker</a></li>
+<li class="toc-entry"><a href="#_habilitar_la_recopilación_de_datos_de_rendimiento">Habilitar la recopilación de datos de rendimiento</a></li>
+</ul></li>
+</li>
+<li class="toc-entry"><a href="#_ngrx">NgRx</a>
+<li><ul class="sectlevel2">
+<li class="toc-entry"><a href="#_instalar_ngrx">Instalar NgRx</a></li>
+<li class="toc-entry"><a href="#_ejemplo_de_uso_de_ngrx">Ejemplo de uso de NgRx</a></li>
+</ul></li>
+</li>
 </ul></div>
 
 <div id="content" class="content">
@@ -2245,7 +2260,7 @@ span.footnote {
 <div class="listingblock">
 <div class="title">Ejemplo de uso de @for</div>
 <div class="content">
-<pre class="highlight"><code class="language-html" data-lang="html">@for(let i=0; i&lt;10; i++)
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">@for(let i=0; i&lt;10; i++)
   &lt;div&gt;{{i}}&lt;/div&gt;
 @empty
   &lt;div&gt;No hay elementos&lt;/div&gt;</code></pre>
@@ -2254,7 +2269,7 @@ span.footnote {
 <div class="listingblock">
 <div class="title">Ejemplo de uso de @if con @else if y @else</div>
 <div class="content">
-<pre class="highlight"><code class="language-html" data-lang="html">@if(condicion)
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">@if(condicion)
   &lt;div&gt;Verdadero&lt;/div&gt;
 @else if(otraCondicion)
     &lt;div&gt;Verdadero&lt;/div&gt;
@@ -2265,7 +2280,7 @@ span.footnote {
 <div class="listingblock">
 <div class="title">Ejemplo de uso de @switch</div>
 <div class="content">
-<pre class="highlight"><code class="language-html" data-lang="html">@switch(condicion)
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">@switch(condicion)
   @case(1)
     &lt;div&gt;Uno&lt;/div&gt;
   @case(2)
@@ -2288,7 +2303,7 @@ span.footnote {
 <div class="listingblock">
 <div class="title">Las nuevas vistas diferibles, te permiten cargar perezosamente la lista de comentarios y todas sus dependencias transitivas con una sola línea de código declarativo:</div>
 <div class="content">
-<pre class="highlight"><code class="language-html" data-lang="html">@defer{
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">@defer{
   &lt;app-comments [postId]="postId"&gt;&lt;/app-comments&gt;
 }
 @loading{
@@ -2331,7 +2346,7 @@ span.footnote {
 <div class="listingblock">
 <div class="title">Un ejemplo de uso de <strong>on viewport</strong>:</div>
 <div class="content">
-<pre class="highlight"><code class="language-typecript" data-lang="typecript">@defer (on viewport){
+<pre class="highlightjs highlight"><code class="language-typecript hljs" data-lang="typecript">@defer (on viewport){
   &lt;app-comments [postId]="postId"&gt;&lt;/app-comments&gt;
 }
 @loading{
@@ -2370,7 +2385,7 @@ span.footnote {
 <div class="listingblock">
 <div class="title">Por ejemplo, puedes usar afterNextRender:</div>
 <div class="content">
-<pre class="highlight"><code class="language-typecript" data-lang="typecript">@Component({
+<pre class="highlightjs highlight"><code class="language-typecript hljs" data-lang="typecript">@Component({
   selector: 'my-chart-cmp',
   template: `&lt;div #chart&gt;{{ ... }}&lt;/div&gt;`,
 })
@@ -2408,7 +2423,7 @@ export class MyChartCmp {
 <div class="listingblock">
 <div class="title">Se crean writable signals llamando a la función de señal con el valor inicial de la señal:</div>
 <div class="content">
-<pre class="highlight"><code class="language-typecript" data-lang="typecript">const count = signal(0);
+<pre class="highlightjs highlight"><code class="language-typecript hljs" data-lang="typecript">const count = signal(0);
 // set the value of the signal
 count.set(1);
 // get the value of the signal
@@ -2427,7 +2442,7 @@ console.log(count()); // 2</code></pre>
 <div class="listingblock">
 <div class="title">Podemos definir una señal computada utilizando la función computed y especificando una función de derivación:</div>
 <div class="content">
-<pre class="highlight"><code class="language-typecript" data-lang="typecript">const count: WriteableSignal&lt;number&gt; = signal(0);
+<pre class="highlightjs highlight"><code class="language-typecript hljs" data-lang="typecript">const count: WriteableSignal&lt;number&gt; = signal(0);
 const doubleCount = computed(() =&gt; count() * 2);
 console.log(doubleCount()); // 0
 count.set(1);
@@ -2437,7 +2452,7 @@ console.log(doubleCount()); // 2</code></pre>
 <div class="listingblock">
 <div class="title">Otro ejemplo de señal computada:</div>
 <div class="content">
-<pre class="highlight"><code class="language-typecript" data-lang="typecript">const showCount = signal(false);
+<pre class="highlightjs highlight"><code class="language-typecript hljs" data-lang="typecript">const showCount = signal(false);
 const count = signal(0);
 const conditionalCount = computed(() =&gt; {
   if (showCount()) {
@@ -2463,7 +2478,7 @@ Los effects siempre se ejecutan al menos una vez. Cuando se ejecuta un efect, re
 <div class="listingblock">
 <div class="title">Se puede crear un efecto con la función effect:</div>
 <div class="content">
-<pre class="highlight"><code class="language-typecript" data-lang="typecript">const count = signal(0);
+<pre class="highlightjs highlight"><code class="language-typecript hljs" data-lang="typecript">const count = signal(0);
 const doubleCount = computed(() =&gt; count() * 2);
 const effect = effect(() =&gt; {
   console.log(`The count is ${count()} and the double count is ${doubleCount()}.`);
@@ -2480,7 +2495,7 @@ count.set(2);
 <div class="listingblock">
 <div class="title">Un ejemplo de uso de effect en un componente:</div>
 <div class="content">
-<pre class="highlight"><code class="language-typecript" data-lang="typecript">@Component({
+<pre class="highlightjs highlight"><code class="language-typecript hljs" data-lang="typecript">@Component({
   selector: 'my-component',
   template: `...`,
 })
@@ -2519,9 +2534,348 @@ export class MyComponent {
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_angular_ssr">Angular SSR</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>SSR es un proceso que implica renderizar páginas en el servidor, lo que resulta en un contenido HTML inicial que contiene el estado de la página inicial. Una vez que el contenido HTML se entrega a un navegador, Angular inicializa la aplicación y utiliza los datos contenidos en el HTML. En Angular 17 se han realizado mejoras en el rendimiento de Angular SSR y SSG, que viene de Angular Universal.</p>
+</div>
+<div class="ulist">
+<div class="title">Ventajas de Angular SSR:</div>
+<ul>
+<li>
+<p>Mejora el rendimiento de la aplicación, especialmente en dispositivos móviles y conexiones lentas</p>
+</li>
+<li>
+<p>Mejora la experiencia del usuario con tiempo de carga más rápido</p>
+</li>
+<li>
+<p>Mejora el SEO de la aplicación al permitir que los motores de búsqueda indexen el contenido de la aplicación</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Se puede añadir Angular SSR a una aplicación Angular existente con el comando ng add:</div>
+<div class="content">
+<pre>ng add @angular/ssr</pre>
+</div>
+</div>
+<div class="ulist">
+<div class="title">Este comando hace modificaciones en la aplicación Angular existente para añadir Angular SSR. Algunos de los cambios que se realizan son:</div>
+<ul>
+<li>
+<p><strong>server.ts:</strong> el servidor de Node.js que se utiliza para renderizar la aplicación Angular en el servidor</p>
+</li>
+<li>
+<p><strong>angular.json:</strong> el archivo de configuración de Angular que se utiliza para configurar la aplicación Angular</p>
+</li>
+<li>
+<p><strong>/src/main.server.ts:</strong> el archivo que se utiliza para inicializar la aplicación Angular en el servidor</p>
+</li>
+<li>
+<p><strong>/src/app/app.config.server.ts:</strong> el módulo de la aplicación Angular que se utiliza para inicializar la aplicación Angular en el servidor</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_configuración_de_angular_ssr">Configuración de Angular SSR</h3>
+<div class="paragraph">
+<p>El archivo server.ts configura un servidor Node.js Express y el renderizado del lado del servidor de Angular. CommonEngine se utiliza para renderizar una aplicación Angular.</p>
+</div>
+<div class="listingblock">
+<div class="title">Un ejemplo de server.ts:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typecript hljs" data-lang="typecript">// All regular routes use the Angular engine
+server.get('*', (req, res, next) =&gt; {
+  const {protocol, originalUrl, baseUrl, headers} = req;
+
+  commonEngine
+      .render({
+        bootstrap,
+        documentFilePath: indexHtml,
+        url: `${protocol}://${headers.host}${originalUrl}`,
+        publicPath: browserDistFolder,
+        providers: [{provide: APP_BASE_HREF, useValue: req.baseUrl}],
+      })
+      .then((html) =&gt; res.send(html))
+      .catch((err) =&gt; next(err));
+});</code></pre>
+</div>
+</div>
+<div class="ulist">
+<div class="title">En este ejemplo:</div>
+<ul>
+<li>
+<p>bootstrap: la función de inicialización de la aplicación Angular</p>
+</li>
+<li>
+<p>documentFilePath: la ruta del archivo index.html</p>
+</li>
+<li>
+<p>document: el DOM inicial que se utilizará para inicializar la aplicación del servidor.</p>
+</li>
+<li>
+<p>url: la URL de la solicitud</p>
+</li>
+<li>
+<p>publicPath: la ruta pública para los archivos del navegador y los assets</p>
+</li>
+<li>
+<p>providers: un array de proveedores de nivel de plataforma para las requests</p>
+</li>
+<li>
+<p>inlineCriticalCss: un booleano que indica si se debe incluir CSS crítico (default: true)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hydration">Hydration</h3>
+<div class="paragraph">
+<p>Cuando se habilita SSR, las respuestas de HttpClient se almacenan en caché mientras se ejecutan en el servidor. Esta información se serializa y se transfiere a un navegador como parte del HTML inicial enviado desde el servidor. En un navegador, HttpClient comprueba si tiene datos en la caché y, si es así, los reutiliza en lugar de hacer una nueva solicitud HTTP durante el renderizado inicial de la aplicación. HttpClient deja de usar la caché una vez que una aplicación se vuelve estable mientras se ejecuta en un navegador.</p>
+</div>
+<div class="paragraph">
+<p>El almacenamiento en caché se realiza de forma predeterminada para todas las solicitudes HEAD y GET. Puedes configurar esta caché utilizando withHttpTransferCacheOptions al proporcionar la hidratación.</p>
+</div>
+<div class="listingblock">
+<div class="title">En el archivo main.server.ts, se puede configurar la caché de transferencia HTTP:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typecript hljs" data-lang="typecript">bootstrapApplication(AppComponent, {
+  providers: [
+    provideClientHydration(
+      withHttpTransferCacheOptions({
+        includePostRequests: true,
+      }),
+    ),
+  ],
+});</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_compatibilidad_con_api_del_navegador">Compatibilidad con API del navegador</h3>
+<div class="paragraph">
+<p>Algunas funcionalidades del navegador no están disponibles en el servidor. Las aplicaciones no pueden hacer uso de objetos globales específicos del navegador como window, document, navigator o location, así como ciertas propiedades de HTMLElement.</p>
+</div>
+<div class="paragraph">
+<p>In general, code which relies on browser-specific symbols should only be executed in the browser, not on the server. This can be enforced through the afterRender and afterNextRender lifecycle hooks. These are only executed on the browser and skipped on the server.
+En general, el código que depende del navegador sólo debe ejecutarse en éste, no en el servidor. Esto se puede hacer con los nuevos kooks en el ciclo de vida afterRender y afterNextRender. Éstos sólo se ejecutan en el navegador y se omiten en el servidor.</p>
+</div>
+<div class="ulist">
+<div class="title">Dónde se ejecutan los logs:</div>
+<ul>
+<li>
+<p><strong>constructor:</strong> se ejecuta en el servidor y en el navegador</p>
+</li>
+<li>
+<p><strong>oninit:</strong> se ejecuta en el servidor y en el navegador</p>
+</li>
+<li>
+<p><strong>onchanges:</strong> se ejecuta en el servidor y en el navegador</p>
+</li>
+<li>
+<p><strong>ondestroy:</strong> se ejecuta en el servidor y en el navegador</p>
+</li>
+<li>
+<p><strong>afterrender:</strong> se ejecuta sólo en el navegador</p>
+</li>
+<li>
+<p><strong>afternextrerender:</strong> se ejecuta sólo en el navegador</p>
+</li>
+<li>
+<p><strong>Eventos de DOM:</strong> se ejecutan sólo en el navegador</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Utilizando PLATFORM_ID con isPlatformBrowser y isPlatformServer, podemos obtener y manejar funcionalidades específicas del navegador.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typecript hljs" data-lang="typecript">import { PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+
+@Component({
+  selector: 'my-cmp',
+  template: `...`,
+})
+export class MyComponent {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      console.log('This will only be logged in the browser');
+    }
+    if (isPlatformServer(this.platformId)) {
+      console.log('This will only be logged on the server');
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Ejemplo de uso de afterNextRender:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typecript hljs" data-lang="typecript">import { Component, ViewChild, afterNextRender } from '@angular/core';
+
+@Component({
+  selector: 'my-cmp',
+  template: `&lt;span #content&gt;{{ ... }}&lt;/span&gt;`,
+})
+export class MyComponent {
+  @ViewChild('content') contentRef: ElementRef;
+
+  constructor() {
+    afterNextRender(() =&gt; {
+      // Safe to check `scrollHeight` because this will only run in the browser, not the server.
+      console.log('content height: ' + this.contentRef.nativeElement.scrollHeight);
+    });
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_angular_service_worker">Angular Service Worker</h3>
+<div class="paragraph">
+<p>Con angular SSR, el comportamiento de service worker cambia. La solicitud inicial del servidor se renderizará en el servidor como se espera. Sin embargo, después de esa solicitud inicial, las solicitudes posteriores son manejadas por el service worker y siempre se renderizan en el lado del cliente.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_habilitar_la_recopilación_de_datos_de_rendimiento">Habilitar la recopilación de datos de rendimiento</h3>
+<div class="paragraph">
+<p>El CommonEngine ofrece una opción para iniciar la recopilación de datos de perfil de rendimiento y mostrar los resultados en la consola del servidor.</p>
+</div>
+<div class="paragraph">
+<p>Esto se puede hacer estableciendo en el archivo server.ts:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typecript hljs" data-lang="typecript">content_copy
+const commonEngine = new CommonEngine({
+  enablePerformanceProfiler: true,
+});</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ngrx">NgRx</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>NgRx es una biblioteca de gestión de estado para Angular. Proporciona una forma de gestionar el estado de la aplicación de forma reactiva y unidireccional.</p>
+</div>
+<div class="sect2">
+<h3 id="_instalar_ngrx">Instalar NgRx</h3>
+<div class="listingblock">
+<div class="title">Para instalar NgRx, se puede utilizar el comando ng add:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ng add @ngrx/store@latest</code></pre>
+</div>
+</div>
+<div class="ulist">
+<div class="title">Este comando instala NgRx y realiza las siguientes tareas:</div>
+<ul>
+<li>
+<p>Actualiza el archivo package.json con las dependencias de NgRx</p>
+</li>
+<li>
+<p>Modifica app.config.ts para añadir provideStore()</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Conceptos clave de NgRx:</div>
+<ul>
+<li>
+<p><strong>Store</strong> es un contenedor de estado que contiene el estado de la aplicación.</p>
+</li>
+<li>
+<p><strong>Actions</strong> describen eventos únicos que se envían desde componentes y servicios.</p>
+</li>
+<li>
+<p><strong>Cambios de estado</strong> son manejados por funciones puras llamadas reductores que toman el estado actual y la última acción para calcular un nuevo estado.</p>
+</li>
+<li>
+<p><strong>Selectors</strong> son funciones puras utilizadas para seleccionar, derivar y componer piezas de estado.</p>
+</li>
+<li>
+<p><strong>State</strong> se accede con el Store, un observable de estado y un observador de acciones.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://ngrx.io/generated/images/guide/store/state-management-lifecycle.png" alt="NgRx State Management Lifecycle">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ejemplo_de_uso_de_ngrx">Ejemplo de uso de NgRx</h3>
+<div class="listingblock">
+<div class="title">Hay que definir un estado inicial y los reducers en un archivo (reducer.ts):</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typecript hljs" data-lang="typecript">import { Demo } from "../modal/demo.modal";
+import * as DemoActions from './../actions/demo.actions';
+
+const initialState: Demo = {
+    name: 'Harisudhan',
+    gender: 'Male'
+}
+
+export function reducer(state: Demo[] = [initialState], action: DemoActions.Actions) {
+    switch(action.type) {
+        case DemoActions.ADD_DEMO:
+            return [...state, action.payload];
+        case DemoActions.REMOVE_DEMO:
+            state.splice(action.payload, 1);
+            return state;
+        default:
+            return state;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Un ejemplo de uso de NgRx en un componente:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typecript hljs" data-lang="typecript">import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Demo } from '../modal/demo.modal';
+import * as DemoActions from './../actions/demo.actions';
+
+@Component({
+  selector: 'app-demo',
+  templateUrl: './demo.component.html',
+  styleUrls: ['./demo.component.css']
+})
+export class DemoComponent {
+    constructor(private store: Store&lt;{ demo: Demo[] }&gt;) {
+        this.demo = store.select('demo');
+    }
+
+  // Dispatch actions
+    addDemo(name) {
+        this.store.dispatch(new DemoActions.AddDemo({name: name}));
+    }
+
+    removeDemo(index) {
+        this.store.dispatch(new DemoActions.RemoveDemo(index));
+    }
+
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
+<script>
+if (!hljs.initHighlighting.called) {
+  hljs.initHighlighting.called = true
+  ;[].slice.call(document.querySelectorAll('pre.highlight > code[data-lang]')).forEach(function (el) { hljs.highlightBlock(el) })
+}
+</script>
 
 <script>
 /**

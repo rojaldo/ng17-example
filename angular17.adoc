@@ -1,3 +1,6 @@
+:source-highlighter: highlight.js
+:source-language: python
+
 = Angualar 17
 
 == Directivas estructurales nuevas
@@ -225,4 +228,238 @@ export class MyComponent {
 * Aádir comportamiento de DOM personalizado que no se puede expresar con la sintaxis de plantillas
 * Realizar renderizado personalizado en un <canvas>, biblioteca de gráficos u otra biblioteca de interfaz de usuario de terceros
 
+
+== Angular SSR
+
+SSR es un proceso que implica renderizar páginas en el servidor, lo que resulta en un contenido HTML inicial que contiene el estado de la página inicial. Una vez que el contenido HTML se entrega a un navegador, Angular inicializa la aplicación y utiliza los datos contenidos en el HTML. En Angular 17 se han realizado mejoras en el rendimiento de Angular SSR y SSG, que viene de Angular Universal.
+
+.Ventajas de Angular SSR:
+* Mejora el rendimiento de la aplicación, especialmente en dispositivos móviles y conexiones lentas
+* Mejora la experiencia del usuario con tiempo de carga más rápido
+* Mejora el SEO de la aplicación al permitir que los motores de búsqueda indexen el contenido de la aplicación
+
+.Se puede añadir Angular SSR a una aplicación Angular existente con el comando ng add:
+[code, bash]
+----
+ng add @angular/ssr
+----
+
+.Este comando hace modificaciones en la aplicación Angular existente para añadir Angular SSR. Algunos de los cambios que se realizan son:
+* **server.ts:** el servidor de Node.js que se utiliza para renderizar la aplicación Angular en el servidor
+* **angular.json:** el archivo de configuración de Angular que se utiliza para configurar la aplicación Angular
+* **/src/main.server.ts:** el archivo que se utiliza para inicializar la aplicación Angular en el servidor
+* **/src/app/app.config.server.ts:** el módulo de la aplicación Angular que se utiliza para inicializar la aplicación Angular en el servidor
+
+=== Configuración de Angular SSR
+
+El archivo server.ts configura un servidor Node.js Express y el renderizado del lado del servidor de Angular. CommonEngine se utiliza para renderizar una aplicación Angular.
+
+.Un ejemplo de server.ts:
+[source,typecript]
+----
+// All regular routes use the Angular engine
+server.get('*', (req, res, next) => {
+  const {protocol, originalUrl, baseUrl, headers} = req;
+
+  commonEngine
+      .render({
+        bootstrap,
+        documentFilePath: indexHtml,
+        url: `${protocol}://${headers.host}${originalUrl}`,
+        publicPath: browserDistFolder,
+        providers: [{provide: APP_BASE_HREF, useValue: req.baseUrl}],
+      })
+      .then((html) => res.send(html))
+      .catch((err) => next(err));
+});
+----
+
+.En este ejemplo:
+* bootstrap: la función de inicialización de la aplicación Angular
+* documentFilePath: la ruta del archivo index.html
+* document: el DOM inicial que se utilizará para inicializar la aplicación del servidor.
+* url: la URL de la solicitud
+* publicPath: la ruta pública para los archivos del navegador y los assets
+* providers: un array de proveedores de nivel de plataforma para las requests
+* inlineCriticalCss: un booleano que indica si se debe incluir CSS crítico (default: true)
+
+=== Hydration
+
+Cuando se habilita SSR, las respuestas de HttpClient se almacenan en caché mientras se ejecutan en el servidor. Esta información se serializa y se transfiere a un navegador como parte del HTML inicial enviado desde el servidor. En un navegador, HttpClient comprueba si tiene datos en la caché y, si es así, los reutiliza en lugar de hacer una nueva solicitud HTTP durante el renderizado inicial de la aplicación. HttpClient deja de usar la caché una vez que una aplicación se vuelve estable mientras se ejecuta en un navegador.
+
+El almacenamiento en caché se realiza de forma predeterminada para todas las solicitudes HEAD y GET. Puedes configurar esta caché utilizando withHttpTransferCacheOptions al proporcionar la hidratación.
+
+.En el archivo main.server.ts, se puede configurar la caché de transferencia HTTP:
+[source,typecript]
+----
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideClientHydration(
+      withHttpTransferCacheOptions({
+        includePostRequests: true,
+      }),
+    ),
+  ],
+});
+----
+
+=== Compatibilidad con API del navegador
+
+Algunas funcionalidades del navegador no están disponibles en el servidor. Las aplicaciones no pueden hacer uso de objetos globales específicos del navegador como window, document, navigator o location, así como ciertas propiedades de HTMLElement.
+
+In general, code which relies on browser-specific symbols should only be executed in the browser, not on the server. This can be enforced through the afterRender and afterNextRender lifecycle hooks. These are only executed on the browser and skipped on the server.
+En general, el código que depende del navegador sólo debe ejecutarse en éste, no en el servidor. Esto se puede hacer con los nuevos kooks en el ciclo de vida afterRender y afterNextRender. Éstos sólo se ejecutan en el navegador y se omiten en el servidor.
+
+.Dónde se ejecutan los logs:
+* **constructor:** se ejecuta en el servidor y en el navegador
+* **oninit:** se ejecuta en el servidor y en el navegador
+* **onchanges:** se ejecuta en el servidor y en el navegador
+* **ondestroy:** se ejecuta en el servidor y en el navegador
+* **afterrender:** se ejecuta sólo en el navegador
+* **afternextrerender:** se ejecuta sólo en el navegador
+* **Eventos de DOM:** se ejecutan sólo en el navegador
+
+.Utilizando PLATFORM_ID con isPlatformBrowser y isPlatformServer, podemos obtener y manejar funcionalidades específicas del navegador.
+[source,typecript]
+----
+import { PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+
+@Component({
+  selector: 'my-cmp',
+  template: `...`,
+})
+export class MyComponent {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      console.log('This will only be logged in the browser');
+    }
+    if (isPlatformServer(this.platformId)) {
+      console.log('This will only be logged on the server');
+    }
+  }
+}
+----
+
+
+.Ejemplo de uso de afterNextRender:
+[source,typecript]
+----
+import { Component, ViewChild, afterNextRender } from '@angular/core';
+
+@Component({
+  selector: 'my-cmp',
+  template: `<span #content>{{ ... }}</span>`,
+})
+export class MyComponent {
+  @ViewChild('content') contentRef: ElementRef;
+
+  constructor() {
+    afterNextRender(() => {
+      // Safe to check `scrollHeight` because this will only run in the browser, not the server.
+      console.log('content height: ' + this.contentRef.nativeElement.scrollHeight);
+    });
+  }
+}
+----
+
+=== Angular Service Worker
+
+Con angular SSR, el comportamiento de service worker cambia. La solicitud inicial del servidor se renderizará en el servidor como se espera. Sin embargo, después de esa solicitud inicial, las solicitudes posteriores son manejadas por el service worker y siempre se renderizan en el lado del cliente.
+
+=== Habilitar la recopilación de datos de rendimiento
+
+El CommonEngine ofrece una opción para iniciar la recopilación de datos de perfil de rendimiento y mostrar los resultados en la consola del servidor. 
+
+Esto se puede hacer estableciendo en el archivo server.ts:
+[source,typecript]
+----
+content_copy
+const commonEngine = new CommonEngine({
+  enablePerformanceProfiler: true,
+});
+----
+
+== NgRx
+
+NgRx es una biblioteca de gestión de estado para Angular. Proporciona una forma de gestionar el estado de la aplicación de forma reactiva y unidireccional.
+
+=== Instalar NgRx
+
+.Para instalar NgRx, se puede utilizar el comando ng add:
+[source,bash]
+----
+ng add @ngrx/store@latest
+----
+
+.Este comando instala NgRx y realiza las siguientes tareas:
+* Actualiza el archivo package.json con las dependencias de NgRx
+* Modifica app.config.ts para añadir provideStore()
+
+.Conceptos clave de NgRx:
+* **Store** es un contenedor de estado que contiene el estado de la aplicación.
+* **Actions** describen eventos únicos que se envían desde componentes y servicios.
+* **Cambios de estado** son manejados por funciones puras llamadas reductores que toman el estado actual y la última acción para calcular un nuevo estado.
+* **Selectors** son funciones puras utilizadas para seleccionar, derivar y componer piezas de estado.
+* **State** se accede con el Store, un observable de estado y un observador de acciones.
+
+image::https://ngrx.io/generated/images/guide/store/state-management-lifecycle.png[NgRx State Management Lifecycle]
+
+
+=== Ejemplo de uso de NgRx
+
+.Hay que definir un estado inicial y los reducers en un archivo (reducer.ts):
+[source,typecript]
+----
+import { Demo } from "../modal/demo.modal";
+import * as DemoActions from './../actions/demo.actions';
+
+const initialState: Demo = {
+    name: 'Harisudhan',
+    gender: 'Male'
+}
+
+export function reducer(state: Demo[] = [initialState], action: DemoActions.Actions) {
+    switch(action.type) {
+        case DemoActions.ADD_DEMO:
+            return [...state, action.payload];
+        case DemoActions.REMOVE_DEMO:
+            state.splice(action.payload, 1);
+            return state;
+        default:
+            return state;
+    }
+}
+----
+
+.Un ejemplo de uso de NgRx en un componente:
+[source,typecript]
+----
+import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Demo } from '../modal/demo.modal';
+import * as DemoActions from './../actions/demo.actions';
+
+@Component({
+  selector: 'app-demo',
+  templateUrl: './demo.component.html',
+  styleUrls: ['./demo.component.css']
+})
+export class DemoComponent {
+    constructor(private store: Store<{ demo: Demo[] }>) {
+        this.demo = store.select('demo');
+    }
+
+  // Dispatch actions
+    addDemo(name) {
+        this.store.dispatch(new DemoActions.AddDemo({name: name}));
+    }
+
+    removeDemo(index) {
+        this.store.dispatch(new DemoActions.RemoveDemo(index));
+    }
+
+}
+----
 

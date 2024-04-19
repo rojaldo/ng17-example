@@ -34,6 +34,12 @@
 			<app-form></app-form>
 		</ng-template>
 	</li>
+	<li [ngbNavItem]="6">
+		<button ngbNavLink>Trivial</button>
+		<ng-template ngbNavContent>
+			<app-trivial></app-trivial>
+		</ng-template>
+	</li>
 </ul>
 
 <div [ngbNavOutlet]="nav" class="mt-2"></div>
