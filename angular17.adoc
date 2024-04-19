@@ -10,8 +10,8 @@
 .Ejemplo de uso de @for
 [source,html]
 ----
-@for(let i=0; i<10; i++)
-  <div>{{i}}</div>
+@for(card of cards; track $index)
+  <div>{{card}}</div>
 @empty
   <div>No hay elementos</div>
 ----
@@ -96,7 +96,7 @@ Para mejorar el rendimiento de Angular SSR y SSG, a largo plazo nos gustaría al
 
 .Para conseguir ésto, se han desarrollado un conjunto de nuevos ganchos de ciclo de vida:
 
-* **afterNextRender: ** registra un callback para ser invocado la próxima vez que la aplicación termine de renderizar
+* **afterRender: ** registra un callback para ser invocado la próxima vez que la aplicación termine de renderizar
 * **afterNextRender: ** registra un callback para ser invocado la próxima vez que la aplicación termine de renderizar
 
 Únicamente el navegador invocará estos ganchos, lo que te permite enchufar lógica DOM personalizada de forma segura directamente dentro de tus componentes. 

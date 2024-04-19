@@ -19,9 +19,12 @@ export class TrivialCardComponent {
     console.log(answer, index);
     this.card.isAnswered = true;
 
-    this.buttonClasses.forEach((element, index) => {
-      this.card.isCorrectAnswer(element) ? this.buttonClasses[index] = 'btn btn-success' : this.buttonClasses[index] = 'btn btn-secondary';
-    });
+    // mark the correct answer with green and the rest with grey
+    this.buttonClasses = ['btn btn-secondary', 'btn btn-secondary', 'btn btn-secondary', 'btn btn-secondary'];
+    
+    // mark the correct answer with green
+    this.buttonClasses[this.card.correctAnswerIndex] = 'btn btn-success';
+
     if (!this.card.isCorrectAnswer(answer)) {
       this.buttonClasses[index] = 'btn btn-danger';
     

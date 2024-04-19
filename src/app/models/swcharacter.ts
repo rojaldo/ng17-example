@@ -9,7 +9,10 @@ export class SWCharacter {
     private _birthYear = ''
     private _gender = ''
 
-    constructor(json: any) {
+    constructor(json?: any) {
+        if (!json) {
+            return
+        }
         this._name = json.name
         this._height = json.height
         this._mass = json.mass

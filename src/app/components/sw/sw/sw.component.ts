@@ -9,13 +9,14 @@ import { SortSW } from '../../../enums/enum';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 import { FilterByHeightPipe } from "../../../pipes/filter-by-height.pipe";
+import { CharacterCardComponent } from "../character-card/character-card.component";
 
 @Component({
     selector: 'app-sw',
     standalone: true,
     templateUrl: './sw.component.html',
     styleUrl: './sw.component.scss',
-    imports: [SortPipe, AsyncPipe, NgbDropdownModule, NgxSliderModule, FilterByHeightPipe]
+    imports: [SortPipe, AsyncPipe, NgbDropdownModule, NgxSliderModule, FilterByHeightPipe, CharacterCardComponent]
 })
 export class SwComponent implements OnInit {
 

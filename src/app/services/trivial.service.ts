@@ -19,7 +19,6 @@ export class TrivialService {
       next: (data: any) => {
         this.cards = data.results.map((result: any) => new TrivialCard(result));
         this.cards$.next(this.cards);
-        console.log(data);
       },
       error: (error: any) => {
         console.error(error);

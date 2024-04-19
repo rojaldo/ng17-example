@@ -18,14 +18,8 @@
     >
     @for (character of characters$ |filterByHeight: value: highValue | sortBy: sort | async; track $index) {
         <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">{{character.name}}</h4>
-                    <p class="card-text">{{character.height}}</p>
-                    <p class="card-text">{{character.mass}}</p>
-                </div>
-            </div>
             
+            <app-character-card [character]="character"></app-character-card>
         </div>
 
     }
